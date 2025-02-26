@@ -27,3 +27,23 @@ time.sleep(3)
 start_hunt = "start_hunt.png"
 start_hunt_loc = pyautogui.locateOnScreen(start_hunt, confidence=0.7)
 pyautogui.click(start_hunt_loc)
+
+while True:
+    try:
+        end_battling = "end_battling.png"
+        end_battling_loc = pyautogui.locateOnScreen(end_battling, confidence=0.7)
+
+        if end_battling_loc:
+            hunt_confirm = "hunt_confirm.png"
+            hunt_confirm_loc = pyautogui.locateOnScreen(hunt_confirm, confidence=0.7)
+            pyautogui.click(hunt_confirm_loc)
+            break
+
+    except:
+        print("battling not end waiting.....")
+        time.sleep(5)
+
+time.sleep(3)
+lobby_button = "lobby_button.png"
+lobby_button_loc = pyautogui.locateOnScreen(lobby_button, confidence=0.7)
+pyautogui.click(lobby_button_loc)
