@@ -3,17 +3,16 @@ from pypdf import PdfReader
 from openai import OpenAI
 from pydantic import BaseModel
 
+system = "Your name is miku, and you will always start each response with your name at the start"
 
-def chat(input):
-    return f"Hello {input}"
+openai_client = OpenAI(base_url="http://127.0.0.1:1234/v1", api_key="lmstudilo")
 
-history = [
-    gr.ChatMessage(role="assistant", content="How can I help you?"),
-    gr.ChatMessage(role="user", content="Can you make me a plot of quarterly sales?"),
-    gr.ChatMessage(role="assistant", content="I am happy to provide you that report and plot.")
-]
+def chat(input, history):
+    response = openai_client.chat.completions.create(
+        model="miku",
+        messages= history +  [{"role": "user", "content": input}]
+    )
+    return response.choices[0].message.content
 
 if __name__ == "__main__":
-    with gr.Blocks() as demo:
-        gr.Chatbot(history, type="messages")
-    demo.launch()
+    gr.ChatInterface(chat, type="messages").launch()
